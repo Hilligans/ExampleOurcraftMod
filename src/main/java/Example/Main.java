@@ -1,11 +1,11 @@
 package Example;
 
-import dev.Hilligans.Block.Block;
-import dev.Hilligans.Data.Other.BlockProperties;
-import dev.Hilligans.ModHandler.Content.ModContent;
-import dev.Hilligans.ModHandler.Events.Client.GLInitEvent;
-import dev.Hilligans.ModHandler.Mod;
-import dev.Hilligans.Ourcraft;
+import dev.Hilligans.ourcraft.Block.Block;
+import dev.Hilligans.ourcraft.Data.Other.BlockProperties;
+import dev.Hilligans.ourcraft.ModHandler.Content.ModContent;
+import dev.Hilligans.ourcraft.ModHandler.Events.Client.GLInitEvent;
+import dev.Hilligans.ourcraft.ModHandler.Mod;
+import dev.Hilligans.ourcraft.Ourcraft;
 
 //this is what you use to assign the main class of your mod
 @Mod(modID = "test_mod")

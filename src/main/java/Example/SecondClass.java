@@ -1,6 +1,6 @@
 package Example;
 
-import dev.Hilligans.ModHandler.Events.Client.OpenScreenEvent;
+import dev.Hilligans.ourcraft.ModHandler.Events.Client.OpenScreenEvent;
 
 public class SecondClass {
 
