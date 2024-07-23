@@ -41,6 +41,15 @@ public class CPlayerDiggingPacket5 extends PacketBase<IServerPacketHandler> {
 
     In 1.7.3, when a player opens a door with left click the server receives Packet 0xE+start digging and opens the door.
      */
+    public CPlayerDiggingPacket5() {}
+
+    public CPlayerDiggingPacket5(byte status, int x, int y, int z, byte face) {
+        this.status = status;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.face = face;
+    }
 
     @Override
     public void encode(IPacketByteArray packetData) {

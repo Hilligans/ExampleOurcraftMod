@@ -10,7 +10,7 @@ public class SMapChunkBulkPacket5 extends PacketBase<IClientPacketHandler> {
     int dataLength;
     boolean skyLightSent; //Whether or not the chunk data contains a light nibble array. This is true in the main world, false in the end + nether
 
-    byte[] data;    //Compressed chunk data
+    byte[] data = new byte[0];    //Compressed chunk data
 
     /*
 

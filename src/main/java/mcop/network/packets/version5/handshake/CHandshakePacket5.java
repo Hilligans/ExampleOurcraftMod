@@ -1,8 +1,11 @@
 package mcop.network.packets.version5.handshake;
 
+import dev.hilligans.ourcraft.data.other.server.ServerPlayerData;
 import dev.hilligans.ourcraft.network.IPacketByteArray;
 import dev.hilligans.ourcraft.network.IServerPacketHandler;
 import dev.hilligans.ourcraft.network.PacketBase;
+import mcop.MCOPServerPlayerData;
+import mcop.network.MCOPServerNetworkHandler;
 import mcop.server.MCOPServer;
 
 public class CHandshakePacket5 extends PacketBase<IServerPacketHandler> {

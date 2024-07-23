@@ -14,7 +14,7 @@ public class MCOPPacketEncoder extends MessageToByteEncoder<IPacketByteArray> {
 
         arr.writeVarInt((int) msg.getSize() + IByteArray.varIntLength(msg.getPacketID()));
         arr.writeVarInt(msg.getPacketID());
-        System.out.println("PacketIDDD:" + msg.getPacketID());
+        //System.out.println("PacketIDDD:" + msg.getPacketID());
         out.writeBytes(msg.getByteBuf());
     }
 }

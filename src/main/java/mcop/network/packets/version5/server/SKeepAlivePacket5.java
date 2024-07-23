@@ -3,6 +3,7 @@ package mcop.network.packets.version5.server;
 import dev.hilligans.ourcraft.network.IClientPacketHandler;
 import dev.hilligans.ourcraft.network.IPacketByteArray;
 import dev.hilligans.ourcraft.network.PacketBase;
+import mcop.network.packets.version5.client.CKeepAlivePacket5;
 
 public class SKeepAlivePacket5 extends PacketBase<IClientPacketHandler> {
 
@@ -23,6 +24,7 @@ public class SKeepAlivePacket5 extends PacketBase<IClientPacketHandler> {
 
     @Override
     public void encode(IPacketByteArray packetData) {
+        System.err.println("encoding");
         packetData.writeInt(id);
     }
 
@@ -33,6 +35,6 @@ public class SKeepAlivePacket5 extends PacketBase<IClientPacketHandler> {
 
     @Override
     public void handle(IClientPacketHandler iClientPacketHandler) {
-        //TODO send keepalive to server
+        iClientPacketHandler.sendPacket(new CKeepAlivePacket5(id));
     }
 }

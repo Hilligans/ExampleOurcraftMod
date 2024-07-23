@@ -4,6 +4,7 @@ import dev.hilligans.ourcraft.network.IClientPacketHandler;
 import dev.hilligans.ourcraft.network.IPacketByteArray;
 import dev.hilligans.ourcraft.network.IServerPacketHandler;
 import dev.hilligans.ourcraft.network.PacketBase;
+import mcop.server.MCOPServer;
 
 public class CKeepAlivePacket5 extends PacketBase<IServerPacketHandler> {
 
@@ -11,6 +12,12 @@ public class CKeepAlivePacket5 extends PacketBase<IServerPacketHandler> {
     //The client must respond with the same packet.
 
     int keepAliveID;
+
+    public CKeepAlivePacket5() {}
+
+    public CKeepAlivePacket5(int keepAliveID) {
+        this.keepAliveID = keepAliveID;
+    }
 
     @Override
     public void encode(IPacketByteArray packetData) {
@@ -24,6 +31,6 @@ public class CKeepAlivePacket5 extends PacketBase<IServerPacketHandler> {
 
     @Override
     public void handle(IServerPacketHandler iServerPacketHandler) {
-        //todo handle
+        iServerPacketHandler.getServerPlayerData().arbDataMap.put("timeoutTime", keepAliveID);
     }
 }

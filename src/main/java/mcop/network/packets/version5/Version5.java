@@ -1,6 +1,8 @@
 package mcop.network.packets.version5;
 
 import dev.hilligans.ourcraft.mod.handler.content.ModContainer;
+import mcop.MCOP;
+import mcop.blocks.Version5BlockTable;
 import mcop.network.packets.version5.client.*;
 import mcop.network.packets.version5.handshake.CHandshakePacket5;
 import mcop.network.packets.version5.login.CLoginStartPacket5;
@@ -113,7 +115,7 @@ public class Version5 {
         modContainer.registerPacket("mcop:5-play-client", 0x09, CHeldItemChangePacket5::new);
         modContainer.registerPacket("mcop:5-play-client", 0x0A, CAnimationPacket5::new);
         modContainer.registerPacket("mcop:5-play-client", 0x0B, CEntityActionPacket5::new);
-        modContainer.registerPacket("mcop:5-play-client", 0x0D, CSteerVehiclePacket5::new);
+        modContainer.registerPacket("mcop:5-play-client", 0x0C, CSteerVehiclePacket5::new);
         modContainer.registerPacket("mcop:5-play-client", 0x0D, CCloseWindowPacket5::new);
         modContainer.registerPacket("mcop:5-play-client", 0x0E, CClickWindowPacket5::new);
         modContainer.registerPacket("mcop:5-play-client", 0x0F, CConfirmTransactionPacket5::new);
@@ -126,6 +128,10 @@ public class Version5 {
         modContainer.registerPacket("mcop:5-play-client", 0x16, CClientStatusPacket5::new);
         modContainer.registerPacket("mcop:5-play-client", 0x17, CPluginMessagePacket5::new);
 
+        Version5BlockTable table = new Version5BlockTable(modContainer.gameInstance);
+        MCOP.table = table;
+        table.loadBlocks(modContainer);
     }
+
 
 }

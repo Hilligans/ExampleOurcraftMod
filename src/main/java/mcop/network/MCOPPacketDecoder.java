@@ -14,7 +14,7 @@ public class MCOPPacketDecoder extends ByteToMessageDecoder {
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> list) throws Exception {
         int packetLength = in.readableBytes();
 
-        System.out.println(packetLength);
+      //  System.out.println(packetLength);
 
         int numRead = 0;
         int result = 0;
@@ -27,7 +27,7 @@ public class MCOPPacketDecoder extends ByteToMessageDecoder {
             }
             packetLength--;
             read = in.readByte();
-            System.err.println(Integer.toBinaryString(read & 0xFF));
+           // System.err.println(Integer.toBinaryString(read & 0xFF));
             int value = read & 127;
             result |= value << (7 * numRead);
             ++numRead;
@@ -37,16 +37,16 @@ public class MCOPPacketDecoder extends ByteToMessageDecoder {
         } while((read & 128) != 0);
 
         if(packetLength >= result) {
-            System.out.println("Result:" + result);
+           // System.out.println("Result:" + result);
             byte[] bytes = new byte[result];
             in.readBytes(bytes);
 
             IPacketByteArray packetData = new PacketByteArray(bytes);
-            System.err.println("PacketID:" + packetData.getPacketID());
+          //  System.err.println("PacketID:" + packetData.getPacketID());
             packetData.setOwner(ctx);
             list.add(packetData);
             in.markReaderIndex();
-            System.err.println("Bytes:" + in.readableBytes());
+          //  System.err.println("Bytes:" + in.readableBytes());
         } else {
             System.err.println("Expected:" + result + " got " + packetLength);
             in.resetReaderIndex();

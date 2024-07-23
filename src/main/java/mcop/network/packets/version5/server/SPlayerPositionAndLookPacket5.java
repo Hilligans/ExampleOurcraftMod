@@ -48,6 +48,17 @@ public class SPlayerPositionAndLookPacket5 extends PacketBase<IClientPacketHandl
     z =  cos(pitch) * cos(yaw)
      */
 
+    public SPlayerPositionAndLookPacket5() {}
+
+    public SPlayerPositionAndLookPacket5(double x, double y, double z, float yaw, float pitch) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.yaw = yaw;
+        this.pitch = pitch;
+        onGround = false;
+    }
+
     @Override
     public void encode(IPacketByteArray packetData) {
         packetData.writeDouble(x);
@@ -70,6 +81,8 @@ public class SPlayerPositionAndLookPacket5 extends PacketBase<IClientPacketHandl
 
     @Override
     public void handle(IClientPacketHandler iClientPacketHandler) {
+        iClientPacketHandler.getClient().rWindow.camera.setPosition(x, y, z);
+        iClientPacketHandler.getClient().rWindow.camera.setRotation(yaw, pitch);
         //TODO handle
     }
 }

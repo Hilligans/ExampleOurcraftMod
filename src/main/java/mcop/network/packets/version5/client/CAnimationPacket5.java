@@ -25,6 +25,14 @@ public class CAnimationPacket5 extends PacketBase<IServerPacketHandler> {
     105 	Uncrouch
      */
 
+
+    public CAnimationPacket5() {}
+
+    public CAnimationPacket5(int entityID, byte animationID) {
+        this.entityID = entityID;
+        this.animationID = animationID;
+    }
+
     @Override
     public void encode(IPacketByteArray packetData) {
         packetData.writeInt(entityID);

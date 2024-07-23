@@ -23,6 +23,15 @@ public class CPlayerPositionPacket5 extends PacketBase<IServerPacketHandler> {
     double z;
     boolean onGround;
 
+    public CPlayerPositionPacket5() {}
+
+    public CPlayerPositionPacket5(double x, double feetY, double headY, double z, boolean onGround) {
+        this.x = x;
+        this.feetY = feetY;
+        this.headY = headY;
+        this.z = z;
+        this.onGround = onGround;
+    }
 
     @Override
     public void encode(IPacketByteArray packetData) {

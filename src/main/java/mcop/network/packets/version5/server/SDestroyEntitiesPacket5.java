@@ -27,6 +27,8 @@ public class SDestroyEntitiesPacket5 extends PacketBase<IClientPacketHandler> {
 
     @Override
     public void handle(IClientPacketHandler iClientPacketHandler) {
-        //TODO handle
+        for(int x = 0; x < count; x++) {
+            iClientPacketHandler.getClient().getWorld().removeEntity(values[x], 0);
+        }
     }
 }

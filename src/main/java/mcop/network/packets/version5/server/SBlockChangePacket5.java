@@ -12,6 +12,16 @@ public class SBlockChangePacket5 extends PacketBase<IClientPacketHandler> {
     int blockID;
     int blockMeta;
 
+    public SBlockChangePacket5(int x, int y, int z, int blockID, int blockMeta) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.blockID = blockID;
+        this.blockMeta = blockMeta;
+    }
+
+    public SBlockChangePacket5() {}
+
     @Override
     public void encode(IPacketByteArray packetData) {
         packetData.writeInt(x);

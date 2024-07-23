@@ -21,11 +21,26 @@ public class SPlayerAbilitiesPacket5 extends PacketBase<IClientPacketHandler> {
     float flyingSpeed; //previous integer value divided by 250
     float walkingSpeed; //previous integer value divided by 250
 
+    public SPlayerAbilitiesPacket5() {}
+
+    public SPlayerAbilitiesPacket5(byte flags, float flyingSpeed, float walkingSpeed) {
+        this.flags = flags;
+        this.flyingSpeed = flyingSpeed;
+        this.walkingSpeed = walkingSpeed;
+    }
+
+    public SPlayerAbilitiesPacket5(boolean godMode, boolean canFly, boolean flying, boolean creative, float flyingSpeed, float walkingSpeed) {
+        this.flags = (byte) ((godMode ? 8 : 0) | (canFly ? 4 : 0) | (flying ? 2 : 0) | (creative ? 1 : 0));
+        this.flyingSpeed = flyingSpeed;
+        this.walkingSpeed = walkingSpeed;
+    }
+
     @Override
     public void encode(IPacketByteArray packetData) {
         packetData.writeByte(flags);
         packetData.writeFloat(flyingSpeed);
         packetData.writeFloat(walkingSpeed);
+        System.err.println("send");
     }
 
     @Override
