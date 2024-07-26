@@ -2,7 +2,13 @@ package mcop;
 
 import dev.hilligans.ourcraft.GameInstance;
 import dev.hilligans.ourcraft.data.other.server.ServerPlayerData;
+import dev.hilligans.ourcraft.network.PacketBase;
+import dev.hilligans.ourcraft.network.PacketByteArray;
+import dev.hilligans.ourcraft.network.ServerNetworkHandler;
+import dev.hilligans.ourcraft.network.debug.PacketTraceByteArray;
 import dev.hilligans.ourcraft.tag.CompoundNBTTag;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelHandlerContext;
 import mcop.entities.PlayerEntity;
 import org.json.JSONObject;
 
@@ -50,5 +56,9 @@ public class MCOPServerPlayerData extends ServerPlayerData {
         entity.setPosition(tag.getDouble("x"), tag.getDouble("y"), tag.getDouble("z"));
 
         return data;
+    }
+
+    public ChannelFuture sendPacket(PacketBase<?> packetBase, ChannelHandlerContext ctx) {
+        return getServerNetworkHandler().sendPacket(packetBase, ctx);
     }
 }

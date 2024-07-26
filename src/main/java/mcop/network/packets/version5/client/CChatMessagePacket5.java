@@ -3,6 +3,8 @@ package mcop.network.packets.version5.client;
 import dev.hilligans.ourcraft.network.IPacketByteArray;
 import dev.hilligans.ourcraft.network.IServerPacketHandler;
 import dev.hilligans.ourcraft.network.PacketBase;
+import mcop.network.packets.version5.server.SChatMessagePacket5;
+import org.json.JSONObject;
 
 public class CChatMessagePacket5 extends PacketBase<IServerPacketHandler> {
 
@@ -32,6 +34,8 @@ public class CChatMessagePacket5 extends PacketBase<IServerPacketHandler> {
 
     @Override
     public void handle(IServerPacketHandler iServerPacketHandler) {
-        //TODO handle
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("text", STR."<\{iServerPacketHandler.getServerPlayerData().getPlayerName()}>: \{message}");
+        iServerPacketHandler.getServer().getServerNetworkHandler().sendPacketInternal(new SChatMessagePacket5(jsonObject.toString()));
     }
 }

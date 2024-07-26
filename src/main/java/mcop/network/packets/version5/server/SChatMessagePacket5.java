@@ -8,6 +8,12 @@ public class SChatMessagePacket5 extends PacketBase<IClientPacketHandler> {
 
     String message;
 
+    public SChatMessagePacket5(String message) {
+        this.message = message;
+    }
+
+    public SChatMessagePacket5() {}
+
     @Override
     public void encode(IPacketByteArray packetData) {
         packetData.writeUTF8(message);

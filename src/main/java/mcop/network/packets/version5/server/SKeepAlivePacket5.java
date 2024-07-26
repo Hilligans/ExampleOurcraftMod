@@ -24,7 +24,6 @@ public class SKeepAlivePacket5 extends PacketBase<IClientPacketHandler> {
 
     @Override
     public void encode(IPacketByteArray packetData) {
-        System.err.println("encoding");
         packetData.writeInt(id);
     }
 

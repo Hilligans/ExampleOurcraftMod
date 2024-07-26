@@ -104,7 +104,7 @@ public class Version5 {
         modContainer.registerPacket("mcop:5-play-server", 0x40, mcop.network.packets.version5.server.SDisconnectPacket5::new);
 
         modContainer.registerPacket("mcop:5-play-client", 0x00, CKeepAlivePacket5::new);
-        modContainer.registerPacket("mcop:5-play-client", 0x01, SChatMessagePacket5::new);
+        modContainer.registerPacket("mcop:5-play-client", 0x01, CChatMessagePacket5::new);
         modContainer.registerPacket("mcop:5-play-client", 0x02, CUseEntityPacket5::new);
         modContainer.registerPacket("mcop:5-play-client", 0x03, CPlayerPacket5::new);
         modContainer.registerPacket("mcop:5-play-client", 0x04, CPlayerPositionPacket5::new);

@@ -64,6 +64,7 @@ public class MCOP extends ModClass {
                                 MCOPServer mcopServer = new MCOPServer(gameInstance);
                                 SimpleServerWorld world = new SimpleServerWorld(0, "overworld");
                                 mcopServer.addWorld(world);
+                                System.out.println(gameInstance);
                                 MCOPServerNetwork net = new MCOPServerNetwork(gameInstance, gameInstance.PROTOCOLS.getExcept("mcop:5-handshake"), mcopServer);
                                 mcopServer.setServerNetworkHandler(net);
                                 mcopServer.setPacketInterface(new Version5PacketInterface(mcopServer));

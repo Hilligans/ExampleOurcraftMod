@@ -52,11 +52,13 @@ public class CHandshakePacket5 extends PacketBase<IServerPacketHandler> {
         }
 
         if(nextState == 1) {
-            iServerPacketHandler.getServerNetworkHandler().network.sendProtocol = iServerPacketHandler.getGameInstance().PROTOCOLS.getExcept("mcop:5-status-server");
-            iServerPacketHandler.getServerNetworkHandler().network.receiveProtocol = iServerPacketHandler.getGameInstance().PROTOCOLS.getExcept("mcop:5-status-client");
+            System.out.println("status");
+            iServerPacketHandler.getServerPlayerData().setSendProtocol(iServerPacketHandler.getGameInstance().PROTOCOLS.getExcept("mcop:5-status-server"));
+            iServerPacketHandler.getServerPlayerData().setReceiveProtocol(iServerPacketHandler.getGameInstance().PROTOCOLS.getExcept("mcop:5-status-client"));
         } else if(nextState == 2) {
-            iServerPacketHandler.getNetwork().setSendProtocol("mcop:5-login-server");
-            iServerPacketHandler.getNetwork().setReceiveProtocol("mcop:5-login-client");
+            System.out.println("login");
+            iServerPacketHandler.getServerPlayerData().setSendProtocol(iServerPacketHandler.getGameInstance().PROTOCOLS.getExcept("mcop:5-login-server"));
+            iServerPacketHandler.getServerPlayerData().setReceiveProtocol(iServerPacketHandler.getGameInstance().PROTOCOLS.getExcept("mcop:5-login-client"));
         } else {
             ctx.close();
             throw new RuntimeException();

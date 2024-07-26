@@ -40,6 +40,7 @@ public class MCOPServer implements IServer {
 
 
     public MCOPServer setServerNetworkHandler(ServerNetwork serverNetwork) {
+        System.out.println(serverNetwork);
         this.serverNetwork = serverNetwork;
         return this;
     }
@@ -102,6 +103,7 @@ public class MCOPServer implements IServer {
         try {
             while(players.peek() != null) {
                 IPlayerEntity playerEntity = players.poll();
+               // System.out.println(playerEntity);
 
                 IServerWorld world = worlds.get(0);
                 playerEntity.setWorld(world);
@@ -160,11 +162,14 @@ public class MCOPServer implements IServer {
 
     @Override
     public void sendPacket(PacketBase<?> packetBase, ServerPlayerData playerData) {
+      //  System.out.println(playerData.getChannelId());
         getServerNetworkHandler().sendPacket(packetBase, playerData.getChannelId());
     }
 
     @Override
-    public void sendPacket(PacketBase packetBase) {}
+    public void sendPacket(PacketBase packetBase) {
+
+    }
 
     @Override
     public void sendPacket(PacketBase packetBase, PlayerEntity playerEntity) {}

@@ -20,11 +20,13 @@ public class MCOPServerNetwork extends ServerNetwork {
 
     public MCOPServerNetwork(GameInstance gameInstance, Protocol protocol, IServer server) {
         super(gameInstance, protocol, server);
+        System.out.println("instance = " + gameInstance);
     }
 
     @Override
     public void startServer(String port) throws Exception {
-        networkHandler = new MCOPServerNetworkHandler(this, server);
+        System.out.println("inst = " + this.gameInstance);
+        networkHandler = new MCOPServerNetworkHandler(this, server, gameInstance.PROTOCOLS.getExcept("mcop:5-handshake"), gameInstance.PROTOCOLS.getExcept("mcop:5-handshake"));
         ServerNetworkHandler.debug = Ourcraft.getArgumentContainer().getBoolean("--tracePacket", false);
 
         final int PORT = Integer.parseInt(System.getProperty("port", port));

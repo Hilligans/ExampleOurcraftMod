@@ -20,19 +20,20 @@ public class MCOPClientNetworkHandler extends ClientNetworkHandler {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         //super.channelActive(ctx);
+        //network.setSendProtocol("mcop:5-status-client");
+        //network.setReceiveProtocol("mcop:5-status-server");
+        //todo fix
         sendPacket(new CHandshakePacket5("localhost", 25565, 1));
-        network.setSendProtocol("mcop:5-status-client");
-        network.setReceiveProtocol("mcop:5-status-server");
         Thread.sleep(500);
         sendPacket(new CRequestStatus5());
     }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, IPacketByteArray msg) throws Exception {
-        System.out.println("Packet");
-        PacketBase<?> packetBase = msg.createPacket(network.receiveProtocol);
-        packets.add(packetBase);
-        System.err.println(packetBase);
+       // System.out.println(Object);
+        //PacketBase<?> packetBase = msg.createPacket(network.receiveProtocol);
+        //packets.add(packetBase);
+        //System.err.println(packetBase);
         processPackets();
     }
 
