@@ -48,7 +48,7 @@ public class MCOPPacketDecoder extends ByteToMessageDecoder {
             in.markReaderIndex();
           //  System.err.println("Bytes:" + in.readableBytes());
         } else {
-            System.err.println("Expected:" + result + " got " + packetLength);
+            //System.err.println("Expected:" + result + " got " + packetLength);
             in.resetReaderIndex();
         }
     }

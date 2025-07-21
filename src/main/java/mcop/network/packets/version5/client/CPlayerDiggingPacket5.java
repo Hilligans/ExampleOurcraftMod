@@ -4,6 +4,7 @@ import dev.hilligans.ourcraft.network.IClientPacketHandler;
 import dev.hilligans.ourcraft.network.IPacketByteArray;
 import dev.hilligans.ourcraft.network.IServerPacketHandler;
 import dev.hilligans.ourcraft.network.PacketBase;
+import mcop.MCOPServerPlayerData;
 
 public class CPlayerDiggingPacket5 extends PacketBase<IServerPacketHandler> {
 
@@ -72,6 +73,13 @@ public class CPlayerDiggingPacket5 extends PacketBase<IServerPacketHandler> {
 
     @Override
     public void handle(IServerPacketHandler iServerPacketHandler) {
-
+        MCOPServerPlayerData data = (MCOPServerPlayerData) iServerPacketHandler.getServerPlayerData();
+        if(status == 0) {
+            data.startDigging(x, y, z, iServerPacketHandler.getWorld());
+        } else if(status == 1) {
+            data.cancelDigging();
+        } else if(status == 2) {
+            data.finishDigging(x, y, z, iServerPacketHandler.getWorld());
+        }
     }
 }

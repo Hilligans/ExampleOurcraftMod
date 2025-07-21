@@ -80,6 +80,6 @@ If any of the painting packets other than the "progress" ones are sent out of or
 
     @Override
     public void handle(IServerPacketHandler iServerPacketHandler) {
-
+        System.out.println("Window: " + windowID);
     }
 }

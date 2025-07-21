@@ -40,7 +40,6 @@ public class SPlayerAbilitiesPacket5 extends PacketBase<IClientPacketHandler> {
         packetData.writeByte(flags);
         packetData.writeFloat(flyingSpeed);
         packetData.writeFloat(walkingSpeed);
-        System.err.println("send");
     }
 
     @Override

@@ -32,6 +32,6 @@ public class CCreativeInventoryActionPacket5 extends PacketBase<IServerPacketHan
 
     @Override
     public void handle(IServerPacketHandler iServerPacketHandler) {
-
+        //iServerPacketHandler.getServerPlayerData().playerInventory.setItem(slot, clickedSlot);
     }
 }

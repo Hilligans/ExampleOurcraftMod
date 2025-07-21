@@ -12,9 +12,9 @@ public class MCOPPacketEncoder extends MessageToByteEncoder<IPacketByteArray> {
     protected void encode(ChannelHandlerContext ctx, IPacketByteArray msg, ByteBuf out) throws Exception {
         PacketByteArray arr = new PacketByteArray(out);
 
-        arr.writeVarInt((int) msg.getSize() + IByteArray.varIntLength(msg.getPacketID()));
-        arr.writeVarInt(msg.getPacketID());
+        arr.writeVarInt((int) msg.getSize());
+        //arr.writeVarInt(msg.getPacketID());
         //System.out.println("PacketIDDD:" + msg.getPacketID());
-        out.writeBytes(msg.getByteBuf());
+        out.writeBytes(msg.getByteBuf().resetReaderIndex());
     }
 }

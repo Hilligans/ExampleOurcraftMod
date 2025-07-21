@@ -1,9 +1,9 @@
 package mcop.network.packets.version5;
 
-import dev.hilligans.ourcraft.data.other.server.ServerPlayerData;
+import dev.hilligans.ourcraft.block.Blocks;
+import dev.hilligans.ourcraft.block.blockstate.IBlockState;
 import dev.hilligans.ourcraft.entity.IPlayerEntity;
-import dev.hilligans.ourcraft.network.ServerNetwork;
-import dev.hilligans.ourcraft.network.ServerNetworkHandler;
+import dev.hilligans.ourcraft.network.PacketBase;
 import dev.hilligans.ourcraft.server.IServer;
 import dev.hilligans.ourcraft.world.newworldsystem.IChunk;
 import dev.hilligans.ourcraft.world.newworldsystem.IWorld;
@@ -32,9 +32,7 @@ public class Version5PacketInterface implements PacketInterface {
 
     @Override
     public void sendWorldInfo(IServer server, IWorld world, MCOPServerPlayerData data) {
-        server.sendPacket(new SJoinGamePacket5((int) data.entity.getID(), 1, (byte)0 ,0, 200, "default"), data);
-        server.sendPacket(new SSpawnPositionPacket5(10, 10, 10), data);
-        server.sendPacket(new SPlayerAbilitiesPacket5(true, true, true, true, 0.1f, 1), data);
+
        // server.sendPacket(new SPlayerPositionAndLookPacket5(10, 100, 10, 0, 0), data);
 
         //server.sendPacket(new SMapChunkBulkPacket5(), data);
@@ -54,7 +52,6 @@ public class Version5PacketInterface implements PacketInterface {
             System.err.println(chunk.getHeight());
             throw new RuntimeException("Cannot send chunk height that isnt 256");
         }
-        server.sendPacket(new SChunkDataPacket5(chunk, MCOP.table), ((PlayerEntity) playerEntity).data);
         for(int x = 0; x < chunk.getWidth(); x++) {
             for(int y =0; y < chunk.getHeight(); y++) {
                 for(int z = 0; z < chunk.getWidth(); z++) {
@@ -66,6 +63,10 @@ public class Version5PacketInterface implements PacketInterface {
 
     @Override
     public void sendPositionAndLook(IPlayerEntity playerEntity) {
-        server.sendPacket(new SPlayerPositionAndLookPacket5(playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), playerEntity.getYaw(), playerEntity.getPitch()), ((PlayerEntity) playerEntity).data);
+  }
+
+    @Override
+    public PacketBase<?> getBlockChangePacket(int x, int y, int z, IWorld world, IBlockState blockState) {
+        return new SBlockChangePacket5(x, y, z, table.getBlockID(Blocks.AIR.getDefaultState()), 0);
     }
 }

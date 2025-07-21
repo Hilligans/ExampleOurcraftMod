@@ -1,5 +1,7 @@
 package mcop.entities;
 
+import dev.hilligans.ourcraft.data.other.IBoundingBox;
+import dev.hilligans.ourcraft.entity.EntityType;
 import dev.hilligans.ourcraft.entity.IEntity;
 import dev.hilligans.ourcraft.world.newworldsystem.IWorld;
 
@@ -17,6 +19,15 @@ public class EntityBase implements IEntity {
     public double x;
     public double y;
     public double z;
+
+
+    public IBoundingBox entityBoundingBox;
+    public MCOPEntityType entityType;
+
+    public EntityBase(MCOPEntityType entityType) {
+        this.entityBoundingBox = entityType.getBoundingBox();
+        this.entityType = entityType;
+    }
 
     int id = 0;
 
@@ -44,6 +55,16 @@ public class EntityBase implements IEntity {
     @Override
     public void setID(long id) {
         this.id = (int) id;
+    }
+
+    @Override
+    public EntityType getEntityType() {
+        return entityType;
+    }
+
+    @Override
+    public IBoundingBox getEntityBoundingBox() {
+        return entityBoundingBox;
     }
 
     @Override
@@ -103,5 +124,10 @@ public class EntityBase implements IEntity {
     @Override
     public double getZ() {
         return z;
+    }
+
+    @Override
+    public void tick() {
+
     }
 }

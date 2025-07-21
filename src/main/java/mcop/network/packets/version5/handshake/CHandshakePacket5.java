@@ -1,11 +1,8 @@
 package mcop.network.packets.version5.handshake;
 
-import dev.hilligans.ourcraft.data.other.server.ServerPlayerData;
 import dev.hilligans.ourcraft.network.IPacketByteArray;
 import dev.hilligans.ourcraft.network.IServerPacketHandler;
 import dev.hilligans.ourcraft.network.PacketBase;
-import mcop.MCOPServerPlayerData;
-import mcop.network.MCOPServerNetworkHandler;
 import mcop.server.MCOPServer;
 
 public class CHandshakePacket5 extends PacketBase<IServerPacketHandler> {
@@ -46,11 +43,11 @@ public class CHandshakePacket5 extends PacketBase<IServerPacketHandler> {
         System.err.println("version:"+version);
         System.err.println("state:"+nextState);
         MCOPServer server = (MCOPServer) iServerPacketHandler.getServer();
-        if(server.getVersion() != version) {
-            System.err.println("WRONG VERSION");
-            iServerPacketHandler.handleDisconnect();
-        }
-
+       // if(server.getVersion() != version) {
+       //     System.err.println("WRONG VERSION");
+       //     iServerPacketHandler.handleDisconnect();
+       // }
+/*
         if(nextState == 1) {
             System.out.println("status");
             iServerPacketHandler.getServerPlayerData().setSendProtocol(iServerPacketHandler.getGameInstance().PROTOCOLS.getExcept("mcop:5-status-server"));
@@ -63,5 +60,7 @@ public class CHandshakePacket5 extends PacketBase<IServerPacketHandler> {
             ctx.close();
             throw new RuntimeException();
         }
+
+ */
     }
 }

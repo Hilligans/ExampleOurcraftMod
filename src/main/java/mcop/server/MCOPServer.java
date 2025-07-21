@@ -5,15 +5,21 @@ import dev.hilligans.ourcraft.data.other.server.ServerPlayerData;
 import dev.hilligans.ourcraft.entity.IPlayerEntity;
 import dev.hilligans.ourcraft.entity.living.entities.PlayerEntity;
 import dev.hilligans.ourcraft.network.PacketBase;
-import dev.hilligans.ourcraft.network.ServerNetwork;
+import dev.hilligans.ourcraft.network.Protocol;
 import dev.hilligans.ourcraft.network.ServerNetworkHandler;
+import dev.hilligans.ourcraft.network.engine.INetworkEngine;
+import dev.hilligans.ourcraft.network.engine.NetworkEntity;
+import dev.hilligans.ourcraft.network.engine.NetworkSocket;
 import dev.hilligans.ourcraft.server.IServer;
+import dev.hilligans.ourcraft.server.authentication.IAccount;
+import dev.hilligans.ourcraft.util.IByteArray;
 import dev.hilligans.ourcraft.world.newworldsystem.ClassicChunk;
 import dev.hilligans.ourcraft.world.newworldsystem.IServerWorld;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import mcop.MessageUtil;
 import mcop.network.PacketInterface;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.function.Consumer;
@@ -26,7 +32,7 @@ public class MCOPServer implements IServer {
 
     public int tickCount;
 
-    ServerNetwork serverNetwork;
+
     PacketInterface packetInterface;
 
     public ConcurrentLinkedQueue<IPlayerEntity> players = new ConcurrentLinkedQueue<>();
@@ -34,15 +40,20 @@ public class MCOPServer implements IServer {
 
     public int worldID = 0;
 
+    public ArrayList<NetworkSocket<?>> sockets = new ArrayList<>();
+
+
+
     public MCOPServer(GameInstance gameInstance) {
         this.gameInstance = gameInstance;
     }
 
 
-    public MCOPServer setServerNetworkHandler(ServerNetwork serverNetwork) {
-        System.out.println(serverNetwork);
-        this.serverNetwork = serverNetwork;
-        return this;
+    public NetworkSocket<?> startServer(String port) {
+        INetworkEngine<?, ?> engine = gameInstance.getExcept("mcop:netEngine", INetworkEngine.class);
+        NetworkSocket<?> socket = engine.openServer(gameInstance.PROTOCOLS.getExcept("mcop:handshake"), this, port);
+        sockets.add(socket);
+        return socket;
     }
 
     public MCOPServer setPacketInterface(PacketInterface packetInterface) {
@@ -50,13 +61,15 @@ public class MCOPServer implements IServer {
         return this;
     }
 
-    public int getVersion() {
-        return versionNumber;
+    @Override
+    public IAccount<?> authenticate(String s, String s1, IByteArray iByteArray) {
+        return null;
     }
 
 
     @Override
     public void addWorld(IServerWorld world) {
+        world.setServer(this);
         worlds.put(worldID++, world);
         ClassicChunk chunk = new ClassicChunk(world, 16, 0, 0);
         Random random = new Random();
@@ -71,9 +84,6 @@ public class MCOPServer implements IServer {
                 chunk.setBlockState(x, 17, z, gameInstance.BLOCKS.getExcept("mcop:dirt").getDefaultState());
             }
         }
-        System.out.println(chunk.get(0, 0, 0).isEmpty());
-
-
         world.setChunk(0, 0, 0, chunk);
     }
 
@@ -85,6 +95,11 @@ public class MCOPServer implements IServer {
 
     @Override
     public IServerWorld getWorld(ServerPlayerData serverPlayerData) {
+        return worlds.get(0);
+    }
+
+    @Override
+    public Iterable<IServerWorld> getWorlds() {
         return null;
     }
 
@@ -131,7 +146,7 @@ public class MCOPServer implements IServer {
     public void doKeepaliveChecks() {
         //System.out.println("keepalive");
         int time = (int) (System.currentTimeMillis()/1000);
-        foreachPlayer(serverPlayerData -> {
+        /*foreachPlayer(serverPlayerData -> {
             Integer time1 = (Integer) serverPlayerData.arbDataMap.put("timeoutTime", time);
 
             if(time1 == null) {
@@ -144,10 +159,12 @@ public class MCOPServer implements IServer {
         });
 
         packetInterface.sendKeepalivePacket(time);
+
+         */
     }
 
     public void foreachPlayer(Consumer<ServerPlayerData> playerDataConsumer) {
-        getServerNetworkHandler().mappedPlayerData.values().forEach(playerDataConsumer);
+      //  getServerNetworkHandler().mappedPlayerData.values().forEach(playerDataConsumer);
     }
 
     @Override
@@ -157,13 +174,17 @@ public class MCOPServer implements IServer {
 
     @Override
     public ServerNetworkHandler getServerNetworkHandler() {
-        return (ServerNetworkHandler) serverNetwork.networkHandler;
+        return null;
     }
 
     @Override
-    public void sendPacket(PacketBase<?> packetBase, ServerPlayerData playerData) {
-      //  System.out.println(playerData.getChannelId());
-        getServerNetworkHandler().sendPacket(packetBase, playerData.getChannelId());
+    public void sendPacket(Protocol protocol, IByteArray iByteArray) {
+
+    }
+
+    @Override
+    public ServerPlayerData loadPlayer(String s, NetworkEntity networkEntity) {
+        return null;
     }
 
     @Override
@@ -182,5 +203,10 @@ public class MCOPServer implements IServer {
     @Override
     public void stop() {
 
+    }
+
+    @Override
+    public String getMOTD() {
+        return IServer.super.getMOTD();
     }
 }

@@ -3,6 +3,7 @@ package mcop.network.packets.version5.client;
 import dev.hilligans.ourcraft.network.IPacketByteArray;
 import dev.hilligans.ourcraft.network.IServerPacketHandler;
 import dev.hilligans.ourcraft.network.PacketBase;
+import mcop.MCOPServerPlayerData;
 
 public class CHeldItemChangePacket5 extends PacketBase<IServerPacketHandler> {
 
@@ -20,6 +21,6 @@ public class CHeldItemChangePacket5 extends PacketBase<IServerPacketHandler> {
 
     @Override
     public void handle(IServerPacketHandler iServerPacketHandler) {
-
+        ((MCOPServerPlayerData)iServerPacketHandler.getServerPlayerData()).changeHeldItemSlot(slot);
     }
 }

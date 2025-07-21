@@ -18,6 +18,8 @@ import mcop.network.packets.version5.status.SResponseStatus5;
 public class Version5 {
 
     public static void register(ModContainer modContainer) {
+
+        /*
         modContainer.registerPacket("mcop:5-handshake", 0, CHandshakePacket5::new);
 
 
@@ -127,6 +129,8 @@ public class Version5 {
         modContainer.registerPacket("mcop:5-play-client", 0x15, CClientSettingsPacket5::new);
         modContainer.registerPacket("mcop:5-play-client", 0x16, CClientStatusPacket5::new);
         modContainer.registerPacket("mcop:5-play-client", 0x17, CPluginMessagePacket5::new);
+
+         */
 
         Version5BlockTable table = new Version5BlockTable(modContainer.gameInstance);
         MCOP.table = table;

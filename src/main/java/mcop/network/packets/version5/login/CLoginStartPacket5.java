@@ -1,12 +1,11 @@
 package mcop.network.packets.version5.login;
 
-import dev.hilligans.ourcraft.data.other.server.ServerPlayerData;
 import dev.hilligans.ourcraft.network.IPacketByteArray;
 import dev.hilligans.ourcraft.network.IServerPacketHandler;
 import dev.hilligans.ourcraft.network.PacketBase;
+import mcop.MCOP;
 import mcop.MCOPServerPlayerData;
 import mcop.entities.PlayerEntity;
-import mcop.network.MCOPServerNetworkHandler;
 import mcop.server.MCOPServer;
 
 import java.util.UUID;
@@ -34,11 +33,7 @@ public class CLoginStartPacket5 extends PacketBase<IServerPacketHandler> {
             //iServerPacketHandler.sendPacket(new SDisconnectPacket5("u suck idiot"), ctx);
 
             MCOPServerPlayerData playerData = (MCOPServerPlayerData) iServerPacketHandler.getServerPlayerData();
-            playerData.channelId = ctx.channel().id();
             iServerPacketHandler.sendPacket(new SLogicSuccessPacket5(UUID.randomUUID().toString(), name), ctx);
-
-            iServerPacketHandler.getServerPlayerData().setSendProtocol(iServerPacketHandler.getGameInstance().PROTOCOLS.getExcept("mcop:5-play-server"));
-            iServerPacketHandler.getServerPlayerData().setReceiveProtocol(iServerPacketHandler.getGameInstance().PROTOCOLS.getExcept("mcop:5-play-client"));
 
             //MCOPServerNetworkHandler packetHandler = (MCOPServerNetworkHandler) iServerPacketHandler;
             //MCOPServerPlayerData playerData = (MCOPServerPlayerData) packetHandler.mappedPlayerData.get(ctx.channel().id());
@@ -46,6 +41,7 @@ public class CLoginStartPacket5 extends PacketBase<IServerPacketHandler> {
             PlayerEntity playerEntity = new PlayerEntity(name);
             playerEntity.setPosition(0, 10, 0);
             playerData.entity = playerEntity;
+            playerData.table = MCOP.table;
             playerEntity.data = playerData;
 
             playerData.setServer(iServerPacketHandler.getServer());

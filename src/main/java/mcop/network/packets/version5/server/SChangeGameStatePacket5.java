@@ -28,6 +28,13 @@ public class SChangeGameStatePacket5 extends PacketBase<IClientPacketHandler> {
     8 	    Fade time 	            Time in ticks for the sky to fade
      */
 
+    public SChangeGameStatePacket5() {}
+
+    public SChangeGameStatePacket5(int reason, float value) {
+        this.reason = reason;
+        this.value = value;
+    }
+
     @Override
     public void encode(IPacketByteArray packetData) {
         packetData.writeUByte(reason);

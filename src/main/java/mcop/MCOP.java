@@ -14,8 +14,8 @@ import mcop.blocks.IBlockConversionTable;
 import mcop.blocks.Version5BlockTable;
 import mcop.effects.Effect;
 import mcop.effects.Effects;
-import mcop.network.MCOPClientNetwork;
-import mcop.network.MCOPServerNetwork;
+import mcop.net.NetEngine;
+import mcop.net.Protocols;
 import mcop.network.packets.version5.Version5;
 import mcop.network.packets.version5.Version5PacketInterface;
 import mcop.server.MCOPServer;
@@ -24,7 +24,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 public class MCOP extends ModClass {
 
@@ -49,7 +48,7 @@ public class MCOP extends ModClass {
             }
         });
 
-        final MCOPClientNetwork[] network = new MCOPClientNetwork[1];
+        //final MCOPClientNetwork[] network = new MCOPClientNetwork[1];
 
         pipeline.addPostHook(new Consumer<GameInstance>() {
             @Override
@@ -65,14 +64,11 @@ public class MCOP extends ModClass {
                                 SimpleServerWorld world = new SimpleServerWorld(0, "overworld");
                                 mcopServer.addWorld(world);
                                 System.out.println(gameInstance);
-                                MCOPServerNetwork net = new MCOPServerNetwork(gameInstance, gameInstance.PROTOCOLS.getExcept("mcop:5-handshake"), mcopServer);
-                                mcopServer.setServerNetworkHandler(net);
-                                mcopServer.setPacketInterface(new Version5PacketInterface(mcopServer));
 
+                                System.out.println("Starting");
                                 IServer.Server server = new IServer.Server(mcopServer);
                                 service.scheduleAtFixedRate(server, 0, 1000/20, TimeUnit.MILLISECONDS);
-
-                                net.startServer("25565");
+                                mcopServer.startServer("25565").connectSocket();
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -80,25 +76,6 @@ public class MCOP extends ModClass {
                     };
                     thread.start();
 
-                } else {
-                    try {
-                        network[0] = new MCOPClientNetwork(gameInstance, gameInstance.PROTOCOLS.getExcept("mcop:5-handshake"));
-                        Client client = new Client(gameInstance, ClientMain.argumentContainer);
-                        client.network = network[0];
-                        Thread thread = new Thread() {
-                            @Override
-                            public void run() {
-                                try {
-                                    network[0].joinServer("localhost", "25565", client);
-                                } catch (Exception e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }
-                        };
-                        thread.start();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
                 }
             }
         });
@@ -109,6 +86,9 @@ public class MCOP extends ModClass {
         Effects.registerEffects((Registry<Effect>) container.registries.get("mcop:effects"));
 
         Version5.register(container);
+
+        container.registerNetworkEngine(new NetEngine());
+        Protocols.register(container);
 
         super.registerContent(container);
     }

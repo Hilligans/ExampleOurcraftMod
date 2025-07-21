@@ -40,6 +40,6 @@ public class CPlayerAbilitiesPacket5 extends PacketBase<IServerPacketHandler> {
 
     @Override
     public void handle(IServerPacketHandler iServerPacketHandler) {
-
+        //System.out.println(flags);
     }
 }

@@ -35,7 +35,7 @@ public class CChatMessagePacket5 extends PacketBase<IServerPacketHandler> {
     @Override
     public void handle(IServerPacketHandler iServerPacketHandler) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("text", STR."<\{iServerPacketHandler.getServerPlayerData().getPlayerName()}>: \{message}");
+       // jsonObject.put("text", STR."<\{iServerPacketHandler.getServerPlayerData().getPlayerName()}>: \{message}");
         iServerPacketHandler.getServer().getServerNetworkHandler().sendPacketInternal(new SChatMessagePacket5(jsonObject.toString()));
     }
 }
